@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from pages.base_page import BasePage
@@ -29,6 +30,7 @@ class OrderPage(BasePage):
     def get_color_checkbox_locator(self, color_name):
         return(By.ID, color_name)
     
+    @allure.step("Заполнить личные данные")
     def fill_personal_data(self, name, surname, address, metro_name, phone):
         self.fill_field(self.INPUT_NAME, name)
         self.fill_field(self.INPUT_SURNAME, surname)
@@ -40,7 +42,8 @@ class OrderPage(BasePage):
 
         self.fill_field(self.INPUT_PHONE, phone)
         self.click_element(self.BUTTON_NEXT)
-
+    
+    @allure.step("Заполнить параметры проката")
     def fill_rent_data(self, date, period, color, comment):
         date_field = self.find_element(self.INPUT_DATE)
         date_field.send_keys(date)
@@ -53,7 +56,8 @@ class OrderPage(BasePage):
         self.fill_field(self.INPUT_COMMENT, comment)
         self.click_element(self.BUTTON_ORDER)
         self.click_element(self.BUTTON_CONFIRM_YES)
-
+    
+    @allure.step("Получить текст подтверждения успешного заказа")
     def get_success_popup_text(self):
         return self.get_text(self.POPUP_SUCCESS_HEADER)
     
